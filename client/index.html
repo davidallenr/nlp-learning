@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NLP Test Client</title>
+  </head>
+  <body>
+    <h1>NLP Test Client</h1>
+    <form id="classify-form">
+      <label for="text">Text:</label>
+      <input type="text" id="text" name="text" />
+      <button type="submit">Classify</button>
+    </form>
+    <p id="result"></p>
+
+    <script>
+      document
+        .getElementById("classify-form")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+          const text = document.getElementById("text").value;
+          const response = await fetch("http://localhost:3000/classify", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ text }),
+          });
+          const data = await response.json();
+          document.getElementById("result").innerText =
+            "Domain: " + data.domain;
+        });
+    </script>
+  </body>
+</html>
